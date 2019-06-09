@@ -35,7 +35,9 @@ public class LogIn extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        handleUserLogin(currentUser);
+        if (currentUser != null) {
+            handleUserLogin(currentUser);
+        }
     }
 
     private void handleUserLogin(FirebaseUser currentUser) {
@@ -51,6 +53,18 @@ public class LogIn extends AppCompatActivity {
 
         String accessCodeString = accessCode.getText().toString() + "@smartwallet.sg";
         String pinString = pin.getText().toString();
+
+        if (accessCodeString.equals("@smartwallet.sg")){
+            Toast.makeText(LogIn.this, "please fill in your Access Code.",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (pinString.equals("")){
+            Toast.makeText(LogIn.this, "please fill in your Pin.",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         mAuth.signInWithEmailAndPassword(accessCodeString, pinString)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -74,4 +88,8 @@ public class LogIn extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 }
