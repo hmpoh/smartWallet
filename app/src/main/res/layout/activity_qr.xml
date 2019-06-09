@@ -7,18 +7,6 @@
     tools:context=".QR"
     android:background="@drawable/qr">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/bottom_navigation"></android.support.design.widget.BottomNavigationView>
-
     <EditText
         android:id="@+id/editText"
         android:layout_width="278dp"
