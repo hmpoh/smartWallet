@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "225315453077",
+    "firebase_url": "https://smartwallet-2359e.firebaseio.com",
+    "project_id": "smartwallet-2359e",
+    "storage_bucket": "smartwallet-2359e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225315453077:android:78aeeb32ed8f951e",
+        "android_client_info": {
+          "package_name": "sg.edu.tp.smartwallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225315453077-jot9btvn7avbvjedddskjr8povenpj8f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sg.edu.tp.smartwallet",
+            "certificate_hash": "24fe2c2c9b1e29b032570665ca2626b6d7de46b2"
+          }
+        },
+        {
+          "client_id": "225315453077-36hhhfhql14qhb59up02h4vf8cl4fd06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYbGdiIgjLBGeJfwMP9hHVIDoxLWH99mk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225315453077-36hhhfhql14qhb59up02h4vf8cl4fd06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
