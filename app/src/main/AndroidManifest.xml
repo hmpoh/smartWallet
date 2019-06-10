@@ -38,7 +38,8 @@
         <activity android:name=".QR" />
         <activity android:name=".Inbox" />
         <activity android:name=".Group" />
-        <activity android:name=".Chat"></activity>
+        <activity android:name=".Chat" />
+        <activity android:name=".AllGroups"></activity>
     </application>
 
 </manifest>
