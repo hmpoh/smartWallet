@@ -8,9 +8,12 @@ import java.util.TimerTask;
 public class MyApp extends Application {
 
     private LogoutListener listener;
+    private Timer timer;
 
     public void startUserSession() {
-        Timer timer = new Timer();
+        cancelTimer();
+        
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -19,8 +22,16 @@ public class MyApp extends Application {
         }, 10000);
     }
 
+    private void cancelTimer() {
+        if (timer !=null) timer.cancel();
+    }
+
     public void registerSessionListener(LogoutListener listener) {
         this.listener = listener;
+    }
+
+    public void onUserInteracted() {
+        startUserSession();
     }
 }
 
