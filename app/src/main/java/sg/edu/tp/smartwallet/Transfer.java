@@ -12,7 +12,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,18 +25,19 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
 
-public class Transfer extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class Transfer extends BaseActivity implements ZXingScannerView.ResultHandler {
 
     Button button;
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+
 
         button = (Button)findViewById(R.id.btnMore);
         button.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +57,8 @@ public class Transfer extends AppCompatActivity implements ZXingScannerView.Resu
                         }
                         if (item.getItemId()==R.id.inbox){
 
-                            inboxActivity();
+                            Intent QR = new Intent(Transfer.this, Inbox.class);
+                            startActivity(QR);
 
                         }
                         if (item.getItemId()==R.id.logout){
@@ -135,7 +136,6 @@ public class Transfer extends AppCompatActivity implements ZXingScannerView.Resu
     @Override
     public void onResume() {
         super.onResume();
-
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (currentapiVersion >= android.os.Build.VERSION_CODES.M) {
             if (checkPermission()) {
@@ -149,6 +149,7 @@ public class Transfer extends AppCompatActivity implements ZXingScannerView.Resu
                 requestPermission();
             }
         }
+
     }
 
     @Override
@@ -167,10 +168,6 @@ public class Transfer extends AppCompatActivity implements ZXingScannerView.Resu
         startActivity(QR);
     }
 
-    private void inboxActivity(){
-        Intent QR = new Intent(this, Inbox.class);
-        startActivity(QR);
-    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
