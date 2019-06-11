@@ -54,7 +54,6 @@
             android:layout_height="wrap_content"
             android:hint="please write a message..."
             android:padding="17dp"
-            android:textColor="#FFFFFF"
             />
         <ImageButton
             android:id="@+id/send_message_button"

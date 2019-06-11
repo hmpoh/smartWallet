@@ -1,11 +1,13 @@
 package sg.edu.tp.smartwallet;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -50,6 +52,21 @@ public class GroupsFragment extends Fragment {
         InitializeFields();
 
         RetriveAndDisplayGroups();
+
+        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //int position is the position of the place
+                //long l is the id of the element upon which is clicked
+                String currentGroupName = adapterView.getItemAtPosition(position).toString();
+                //When clicked on a particular group, ti will get the name and it will store inside the currentGroupName
+
+                Intent groupChatIntent = new Intent(getContext(), Chat.class);
+                groupChatIntent.putExtra("groupName", currentGroupName);
+                startActivity(groupChatIntent);
+            }
+        });
+
 
 
         return groupFragmentView;
