@@ -23,7 +23,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name" />
         <activity android:name=".LogIn" />
-        <activity android:name=".AllGroups">
+        <activity android:name=".Splash">
 
             <!-- intent-filter tells you which screen to launch as first screen -->
             <intent-filter>
@@ -41,7 +41,7 @@
         <activity android:name=".Inbox" />
         <activity android:name=".Group" />
         <activity android:name=".Chat" />
-        <activity android:name=".Splash"></activity>
+        <activity android:name=".AllGroups"></activity>
     </application>
 
 </manifest>

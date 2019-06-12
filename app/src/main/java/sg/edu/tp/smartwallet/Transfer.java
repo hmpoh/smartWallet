@@ -221,4 +221,9 @@ public class Transfer extends BaseActivity implements ZXingScannerView.ResultHan
         AlertDialog alert1 = builder.create();
         alert1.show();
     }
+    public void btnStart (View view){
+        Intent intent = new Intent (Transfer.this, AllGroups.class);
+        startActivity(intent);
+    }
+
 }
