@@ -1,5 +1,6 @@
 package sg.edu.tp.smartwallet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -70,6 +71,16 @@ public class FindPersonToPay extends AppCompatActivity {
             public UsersViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
                 View view = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.numbers_layout,viewGroup,false);
+
+                //send user data over to next screen
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FindPersonToPay.this,AmountToPay.class );
+                        intent.putExtra("mobileNumber",Long.parseLong(mSearchField.getText().toString()));
+                        startActivity(intent);
+                    }
+                });
                 return new UsersViewHolder(view);
             }
 
@@ -100,11 +111,9 @@ public class FindPersonToPay extends AppCompatActivity {
         public void setDetails(Long mobileNumber, String name) {
 
             TextView mobileNumberTextView = (TextView) mView.findViewById(R.id.mobileNumber);
-
             mobileNumberTextView.setText(mobileNumber.toString());
 
             TextView nameTextView = (TextView) mView.findViewById(R.id.person);
-
             nameTextView.setText(name);
 
         }

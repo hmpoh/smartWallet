@@ -10,12 +10,15 @@ public class AmountToPay extends AppCompatActivity {
 
     Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b0,b00;
     TextView ans;
+    Long mMobileNumber;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amount_to_pay);
+
+        mMobileNumber = getIntent().getLongExtra("mobileNumber",0);
 
         b1= (Button)findViewById(R.id.btn1);
         b2= (Button)findViewById(R.id.btn2);
