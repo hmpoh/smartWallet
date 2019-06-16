@@ -195,7 +195,7 @@ public class Chat extends AppCompatActivity {
             String chatName = (String)((DataSnapshot)iterator.next()).getValue();
             String chatTime = (String)((DataSnapshot)iterator.next()).getValue();
 
-            displayTextMessages.append(chatName + ":\n" + chatMessage + ":\n" + chatName + "    " + chatDate + "\n\n\n");
+            displayTextMessages.append(chatName + ":\n" + chatMessage + ":\n" + "    " + chatDate + "\n\n\n");
 
             //Scroll automatically down to the new message first
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN);

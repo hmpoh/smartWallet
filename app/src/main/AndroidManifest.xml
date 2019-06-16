@@ -21,8 +21,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
-        <activity android:name=".LogIn" />
-        <activity android:name=".Splash">
+        <activity android:name=".Splash" />
+        <activity android:name=".LogIn">
 
             <!-- intent-filter tells you which screen to launch as first screen -->
             <intent-filter>
@@ -31,18 +31,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Transfer" />
+        <activity android:name=".HomeActivity" />
         <activity android:name=".SearchPayee" />
         <activity android:name=".Split" />
-        <activity android:name=".Account" />
         <activity android:name=".History" />
         <activity android:name=".QR" />
         <activity android:name=".Inbox" />
         <activity android:name=".Group" />
         <activity android:name=".Chat" />
         <activity android:name=".AllGroups" />
-        <activity android:name=".FindPersonToPay"
-            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+        <activity
+            android:name=".FindPersonToPay"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity android:name=".AmountToPay"></activity>
     </application>
 
 </manifest>

@@ -27,7 +27,6 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         mAuth = FirebaseAuth.getInstance();
-
     }
 
     @Override
@@ -41,7 +40,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     private void handleUserLogin(FirebaseUser currentUser) {
-        Intent intent = new Intent(this, Transfer.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
 
         Log.d(TAG, "handling user log in");

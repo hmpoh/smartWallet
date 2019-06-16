@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Transfer extends BaseActivity  {
+public class HomeActivity extends BaseActivity  {
 
 
 
@@ -66,7 +66,7 @@ public class Transfer extends BaseActivity  {
                 }
                 if (item.getItemId()==R.id.inbox){
 
-                    Intent QR = new Intent(Transfer.this, Inbox.class);
+                    Intent QR = new Intent(HomeActivity.this, Inbox.class);
                     startActivity(QR);
 
                 }
@@ -74,7 +74,7 @@ public class Transfer extends BaseActivity  {
 
                     logout();
                 }
-                // Toast.makeText(Transfer.this,""+item.getTitle(),Toast.LENGTH_SHORT).show();
+                // Toast.makeText(HomeActivity.this,""+item.getTitle(),Toast.LENGTH_SHORT).show();
                 return  true;
             }
         });
@@ -83,23 +83,23 @@ public class Transfer extends BaseActivity  {
 
     }
     public void btnStart (View view){
-        Intent intent = new Intent (Transfer.this, AllGroups.class);
+        Intent intent = new Intent (HomeActivity.this, AllGroups.class);
         startActivity(intent);
     }
 
     public void onClickPay (View view){
-        Intent intent = new Intent (Transfer.this, FindPersonToPay.class);
+        Intent intent = new Intent (HomeActivity.this, FindPersonToPay.class);
         startActivity(intent);
     }
 
     private void logout(){
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
-        startActivity(new Intent(Transfer.this, LogIn.class));
+        startActivity(new Intent(HomeActivity.this, LogIn.class));
     }
 
     private void qRActivity(){
-        Intent QR = new Intent(Transfer.this, QR.class);
+        Intent QR = new Intent(HomeActivity.this, QR.class);
         startActivity(QR);
     }
 
