@@ -1,6 +1,7 @@
 package sg.edu.tp.smartwallet;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -97,7 +98,9 @@ public class AllGroups extends AppCompatActivity {
     }
 
     public void onClickButtonNewGroup(View view) {
-        RequestNewGroup();
+//        RequestNewGroup();
+        Intent intent = new Intent(AllGroups.this, AddParticipantsToGroup.class);
+        startActivity(intent);
 
     }
 }

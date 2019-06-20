@@ -1,9 +1,11 @@
 package sg.edu.tp.smartwallet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -205,4 +207,33 @@ public class Chat extends AppCompatActivity {
 
     }
 
-}
+    public void onClickAttachment(View view){
+        android.support.v7.widget.PopupMenu popupMenu = new android.support.v7.widget.PopupMenu(this, view);
+        popupMenu.getMenuInflater().inflate(R.menu.attachments_menu, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new android.support.v7.widget.PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId()==R.id.generate_Amount_QR){
+
+                    Intent QR = new Intent(Chat.this, QR.class);
+                    startActivity(QR);
+
+                }
+                if (item.getItemId()==R.id.receipt){
+
+                    Intent QR = new Intent(Chat.this, Receipt.class);
+                    startActivity(QR);
+
+                }
+
+                // Toast.makeText(HomeActivity.this,""+item.getTitle(),Toast.LENGTH_SHORT).show();
+                return  true;
+            }
+        });
+
+        popupMenu.show();
+
+    }
+    }
+

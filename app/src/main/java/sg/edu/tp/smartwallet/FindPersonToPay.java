@@ -20,12 +20,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-import org.w3c.dom.Text;
-
 public class FindPersonToPay extends AppCompatActivity {
 
     private EditText mSearchField;
     private Button mSearchBtn;
+    public String mName;
 
     private RecyclerView mResultList;
 
@@ -78,6 +77,7 @@ public class FindPersonToPay extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(FindPersonToPay.this,AmountToPay.class );
                         intent.putExtra("mobileNumber",Long.parseLong(mSearchField.getText().toString()));
+                        intent.putExtra("MNAME",mName);
                         startActivity(intent);
                     }
                 });
@@ -113,8 +113,9 @@ public class FindPersonToPay extends AppCompatActivity {
             TextView mobileNumberTextView = (TextView) mView.findViewById(R.id.mobileNumber);
             mobileNumberTextView.setText(mobileNumber.toString());
 
-            TextView nameTextView = (TextView) mView.findViewById(R.id.person);
-            nameTextView.setText(name);
+            TextView nameTextView = (TextView) mView.findViewById(R.id.txtMobileNumber);
+            nameTextView.setText("Pay to " + name);
+            mName = name.toString();
 
         }
     }

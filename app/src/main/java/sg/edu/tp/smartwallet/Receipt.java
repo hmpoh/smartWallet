@@ -1,11 +1,10 @@
 package sg.edu.tp.smartwallet;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,41 +14,38 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.zip.Inflater;
-
-public class AccountFragment extends Fragment {
-
-    TextView textView;
+public class Receipt extends AppCompatActivity {
+    TextView textName,textAmount;
     DatabaseReference reff;
     private FirebaseAuth mAuth;
     private String currentUserID;
 
-    public static AccountFragment newInstance(){
-       AccountFragment fragment = new AccountFragment();
-        return fragment;
-    }
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_receipt);
 
-    }
-    @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.fragment_account,container,false);
-        textView = (TextView) fragmentView.findViewById(R.id.textBalance);
+        textName = findViewById(R.id.name);
+        textAmount = findViewById(R.id.amountPaid);
 
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
+        Intent intent = getIntent();
+        String key = intent.getStringExtra("SKEY");
+        final String amount = intent.getStringExtra("Amount");
+        textAmount.setText("$" + amount);
 
 
-        reff = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID);
+        reff = FirebaseDatabase.getInstance().getReference("Users").child(key);
+
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String balance=dataSnapshot.child("balance").getValue().toString();
-                textView.setText("$" + balance);
+                String name=dataSnapshot.child("name").getValue().toString();
+                textName.setText(name);
 
             }
 
@@ -58,7 +54,14 @@ public class AccountFragment extends Fragment {
 
             }
         });
-        return fragmentView;
+
+    }
+
+
+    public void onClickDone (View view){
+
+        Intent intent = new Intent(Receipt.this, HomeActivity.class);
+        startActivity(intent);
+
     }
 }
-
