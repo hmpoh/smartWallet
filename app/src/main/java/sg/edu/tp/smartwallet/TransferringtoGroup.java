@@ -95,9 +95,9 @@ public class TransferringtoGroup extends AppCompatActivity {
                             ValueEventListener valueEventListener = new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                                //    for (DataSnapshot ds: dataSnapshot.getChildren()) {
                                         String myParentNode=dataSnapshot.getKey();
-                                        amountRaised = ds.child("Amount Raised").getValue().toString();
+                                        amountRaised = dataSnapshot.child("Amount Raised").getValue().toString();
                                         Double creditDoubleAmountRaised = Double.parseDouble(amountRaised);
 
                                         double raisedAmount = creditDoubleAmountRaised + doubleAmount;
@@ -115,7 +115,7 @@ public class TransferringtoGroup extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
 
-                                    }
+                                   //}
                                 }
 
                                 @Override
