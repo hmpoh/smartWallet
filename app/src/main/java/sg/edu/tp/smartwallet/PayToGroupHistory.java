@@ -63,37 +63,18 @@ public class PayToGroupHistory extends AppCompatActivity {
                                     deposit_list.setAdapter(adapter);
 
                                 }
-                            }
+                                else{
+                                        groupTransferReff.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        groupTransferReff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                groupTransferReff.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
-                            ArrayList<TransferWithName> transfers = new ArrayList<>();
-                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                Transaction transaction = ds.getValue(Transaction.class);
+                                                groupTransferReff.addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
+                                                            ArrayList<TransferWithName> transfers = new ArrayList<>();
+                                                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                                                Transaction transaction = ds.getValue(Transaction.class);
 
 //                                if (transfer.fromMobileNumber.equals(accountId))
 //                                {
@@ -103,13 +84,34 @@ public class PayToGroupHistory extends AppCompatActivity {
 //                                    //TODO
 //                                    //End
 //                                }
-                                if (transaction.toMobileNumber.equals(accountId)){
+                                                                if (transaction.toMobileNumber.equals(accountId)){
 
-                                    transfers.add(new TransferWithName("PAID: $"+ transaction.getAmount(), transaction.getDateTime(),"From "+transaction.getFromMobileNumber()));
-                                    TransferAdapter adapter = new TransferAdapter(PayToGroupHistory.this,transfers);
-                                    withdraw_list.setAdapter(adapter);
+                                                                    transfers.add(new TransferWithName("PAID: $"+ transaction.getAmount(), transaction.getDateTime(),"From "+transaction.getFromMobileNumber()));
+                                                                    TransferAdapter adapter = new TransferAdapter(PayToGroupHistory.this,transfers);
+                                                                    withdraw_list.setAdapter(adapter);
 
-                                }
+                                                                }
+                                                            }
+
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    }
                             }
 
                         }
@@ -129,6 +131,7 @@ public class PayToGroupHistory extends AppCompatActivity {
 
             }
         });
+
 
     }
 }
