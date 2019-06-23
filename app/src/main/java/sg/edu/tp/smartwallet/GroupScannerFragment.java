@@ -3,7 +3,6 @@ package sg.edu.tp.smartwallet;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,7 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -32,9 +30,10 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import static android.Manifest.permission.CAMERA;
 
 
-public class ScannerFragment extends Fragment implements ZXingScannerView.ResultHandler{
+public class GroupScannerFragment extends Fragment implements ZXingScannerView.ResultHandler{
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
+    public String detailgroupName;
 
 
     @Override
@@ -48,8 +47,8 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
         // Inflate the layout for this fragment
         mScannerView = new ZXingScannerView(getActivity());
         // setContentView(mScannerView);
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentapiVersion >= android.os.Build.VERSION_CODES.M) {
+        int currentapiVersion = Build.VERSION.SDK_INT;
+        if (currentapiVersion >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
                 Toast.makeText(getActivity().getApplicationContext(), "Permission already granted", Toast.LENGTH_LONG).show();
 
@@ -104,8 +103,8 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
     @Override
     public void onResume() {
         super.onResume();
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentapiVersion >= android.os.Build.VERSION_CODES.M) {
+        int currentapiVersion = Build.VERSION.SDK_INT;
+        if (currentapiVersion >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
                 if(mScannerView == null) {
                     mScannerView = new ZXingScannerView(getActivity());
@@ -138,7 +137,7 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
         builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mScannerView.resumeCameraPreview(ScannerFragment.this);
+                mScannerView.resumeCameraPreview(GroupScannerFragment.this);
             }
         });
         builder.setNeutralButton("Pay", new DialogInterface.OnClickListener() {
@@ -152,8 +151,11 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
                 firebaseSearchQuery.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        Intent intent = new Intent(getActivity(),AmountToPay.class );
+                        detailgroupName= getActivity().getIntent().getExtras().get("groupName").toString();
+
+                        Intent intent = new Intent(getActivity(),GroupAmountToPay.class );
                         intent.putExtra("mobileNumber",Long.parseLong(mobileNumber));
+                        intent.putExtra("groupName",detailgroupName);
                         String name = dataSnapshot.child("name").getValue().toString();
                         intent.putExtra("MNAME",name);
                         startActivity(intent);
@@ -189,7 +191,7 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new android.support.v7.app.AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(getActivity())
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null)

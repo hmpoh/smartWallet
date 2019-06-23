@@ -16,29 +16,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class AmountToPay extends AppCompatActivity {
-
+public class GroupAmountToPay extends AppCompatActivity {
     Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b0,bDot,bDelete;
     TextView amount;
     Long mMobileNumber;
     String mName;
-    DatabaseReference reff;
+    DatabaseReference RootRef,GroupNameRootRef;
     private FirebaseAuth mAuth;
     private String currentUserID;
-
-
+    public String currentGroupName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amount_to_pay);
+        setContentView(R.layout.activity_group_amount_to_pay);
 
         amount = findViewById(R.id.display);
 
         mMobileNumber = getIntent().getLongExtra("mobileNumber",0);
         mName = getIntent().getStringExtra("MNAME");
 
+        currentGroupName = getIntent().getExtras().get("groupName").toString();
         TextView mobileNumberTextView = (TextView) findViewById(R.id.mobileNumber);
         mobileNumberTextView.setText(mMobileNumber.toString());
 
@@ -150,18 +149,16 @@ public class AmountToPay extends AppCompatActivity {
                 }
             }
         });
-
     }
-
     public void onClickProceed (View view){
         if (amount.getText().toString().length() != 0) {
 
-        checkBalance();
+            checkBalance();
 
 
         }
         else
-            Toast.makeText(AmountToPay.this, "ERROR: Amount cannot be empty.", Toast.LENGTH_LONG).show();
+            Toast.makeText(GroupAmountToPay.this, "ERROR: Amount cannot be empty.", Toast.LENGTH_LONG).show();
 
     }
 
@@ -170,28 +167,40 @@ public class AmountToPay extends AppCompatActivity {
         currentUserID = mAuth.getCurrentUser().getUid();
 
 
-        reff = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID);
-        ValueEventListener balance = reff.addValueEventListener(new ValueEventListener() {
-            public String balance;
+        RootRef = FirebaseDatabase.getInstance().getReference();
+        GroupNameRootRef = RootRef.child("Groups").child(currentGroupName);
+        GroupNameRootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            public String amountRaised,savingsTarget;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                balance = dataSnapshot.child("balance").getValue().toString();
-                Double doubleBalance = Double.parseDouble(balance);
+                amountRaised = dataSnapshot.child("Amount Raised").getValue().toString();
+                Double doubleAmountRaised = Double.parseDouble(amountRaised);
+                savingsTarget = dataSnapshot.child("Savings Target").getValue().toString();
+                Double doubleSavingsTarget = Double.parseDouble(savingsTarget);
                 Double doubleAmount = Double.parseDouble(amount.getText().toString());
 
-                if (doubleBalance < doubleAmount) {
-                    Toast.makeText(AmountToPay.this, "Insufficient Funds.", Toast.LENGTH_LONG).show();
+                if (!doubleAmountRaised.equals(doubleSavingsTarget) ) {
+
+                        Intent intent = new Intent(GroupAmountToPay.this, WarningInsufficientFunds.class);
+                        intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
+                        startActivity(intent);
+                        Toast.makeText(GroupAmountToPay.this, "Amount Raised must meet Target set", Toast.LENGTH_LONG).show();
+                    }
+                else if (doubleAmount>doubleSavingsTarget){
+
+                    Toast.makeText(GroupAmountToPay.this, "Insufficient Funds.", Toast.LENGTH_LONG).show();
                 }
                 else{
                     String amountValue = amount.getText().toString();
                     String toMobile = mMobileNumber.toString();
 
-                    Intent intent  = new Intent(AmountToPay.this, ConfirmPayment.class);
+                    Intent intent  = new Intent(GroupAmountToPay.this, GroupConfirmPayment.class);
 
                     intent.putExtra("AMOUNT",amountValue);
                     intent.putExtra("TOMOBILE",toMobile);
                     intent.putExtra("mName",mName);
+                    intent.putExtra("groupName",getIntent().getStringExtra("groupName"));
 
                     startActivity(intent);
                 }
@@ -205,6 +214,5 @@ public class AmountToPay extends AppCompatActivity {
             }
         });
     }
-
 
 }

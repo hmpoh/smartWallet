@@ -2,9 +2,16 @@ package sg.edu.tp.smartwallet;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -14,6 +21,9 @@ public class QR extends AppCompatActivity {
     public final static int QRcodeWidth = 500 ;
     private ImageView qrCode;
     Bitmap bitmap ;
+    DatabaseReference reff;
+    private FirebaseAuth mAuth;
+    private String currentUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +31,33 @@ public class QR extends AppCompatActivity {
         setContentView(R.layout.activity_qr);
         qrCode = (ImageView) findViewById(R.id.qrCode);
 
-        try {
-            bitmap = TextToImageEncode("hello");
-            qrCode.setImageBitmap(bitmap);
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
+
+        reff = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID);
+        reff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                String mobileNumber=dataSnapshot.child("mobileNumber").getValue().toString();
+                try {
+                    bitmap = TextToImageEncode(mobileNumber);
+                    qrCode.setImageBitmap(bitmap);
 //            String path = saveImage(bitmap);  //give read write permission
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
 //https://demonuts.com/generate-qr-code/

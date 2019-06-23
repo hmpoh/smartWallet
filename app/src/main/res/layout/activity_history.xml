@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".History"
-    android:background="@drawable/history">
+    android:background="@drawable/history"
+    tools:context=".History">
+
+
 
 </android.support.constraint.ConstraintLayout>

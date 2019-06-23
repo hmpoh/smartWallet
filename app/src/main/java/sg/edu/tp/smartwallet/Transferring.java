@@ -98,8 +98,9 @@ public class Transferring extends AppCompatActivity {
                                        String key = ds.getKey();
                                        Log.d(DEBUG_TAG,key);
                                        balance = ds.child("balance").getValue().toString();
+                                       Double creditDoubleBalance = Double.parseDouble(balance);
 
-                                        double Balance = doubleBalance + doubleAmount;
+                                        double Balance = creditDoubleBalance + doubleAmount;
 
                                         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                                         mDatabase.child("Users").child(key).child("balance").setValue(Balance);

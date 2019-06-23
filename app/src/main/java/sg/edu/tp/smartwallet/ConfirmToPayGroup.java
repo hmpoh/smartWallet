@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -18,10 +17,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class ConfirmPayment extends AppCompatActivity {
+public class ConfirmToPayGroup extends AppCompatActivity {
 
     TextView textViewMobileNumber, textViewAccountNumber, textViewAmount, textViewName, textViewNotes;
-    DatabaseReference reff;
+    DatabaseReference reff,accountRef;
     private FirebaseAuth mAuth;
     private String currentUserID;
     String currentDate,currentTime,currentUserMobileNumber,toGroupAccountNumber;
@@ -31,24 +30,23 @@ public class ConfirmPayment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_payment);
+        setContentView(R.layout.activity_confirm_to_pay_group);
 
-
-        textViewMobileNumber = findViewById(R.id.mobileNumber);
         textViewAccountNumber = (TextView) findViewById(R.id.account_number);
         textViewAmount = findViewById(R.id.amount);
         textViewName = findViewById(R.id.name);
         textViewNotes = findViewById(R.id.notes);
 
 
+        Intent i = getIntent();
         textViewAmount.setText(getIntent().getStringExtra("AMOUNT"));
-        textViewMobileNumber.setText(getIntent().getStringExtra("TOMOBILE"));
-        textViewName.setText(getIntent().getStringExtra("mName"));
+        textViewName.setText(getIntent().getStringExtra("groupName"));
 
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
 
         reff = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID);
+
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -72,7 +70,8 @@ public class ConfirmPayment extends AppCompatActivity {
     }
 
     public void onClickCancel(View view){
-        Intent intent = new Intent(ConfirmPayment.this, HomeActivity.class);
+        Intent intent = new Intent(ConfirmToPayGroup.this, Chat.class);
+        intent.putExtra("groupName",getIntent().getStringExtra("groupName"));
         startActivity(intent);
     }
 
@@ -107,9 +106,10 @@ public class ConfirmPayment extends AppCompatActivity {
 //            mDatabase.child(id).child(currentDate);
 //            mDatabase.child(id).child(currentTime);
 
-            Intent intent = new Intent(ConfirmPayment.this, Transferring.class);
+            Intent intent = new Intent(ConfirmToPayGroup.this, Transferring.class);
             intent.putExtra("AMOUNT",amountValue);
             intent.putExtra("TOMOBILE",mobile);
+            intent.putExtra("groupName",getIntent().getStringExtra("groupName"));
             startActivity(intent);
 
 

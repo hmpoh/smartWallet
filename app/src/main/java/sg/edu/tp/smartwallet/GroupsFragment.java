@@ -49,6 +49,7 @@ public class GroupsFragment extends Fragment {
 
         GroupRef = FirebaseDatabase.getInstance().getReference().child("Groups");
 
+
         InitializeFields();
 
         RetriveAndDisplayGroups();

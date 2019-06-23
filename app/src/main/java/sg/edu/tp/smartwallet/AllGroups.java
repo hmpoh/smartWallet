@@ -49,56 +49,9 @@ public class AllGroups extends AppCompatActivity {
     }
 
 
-    private void RequestNewGroup() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(AllGroups.this, R.style.AlertDialog);
-        builder.setTitle("Enter Group Name: ");
-
-        final EditText groupNameField = new EditText(AllGroups.this);
-        groupNameField.setHint("e.g Graduation Trip");
-        builder.setView(groupNameField);
-
-        builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String groupName = groupNameField.getText().toString();
-
-                if (TextUtils.isEmpty(groupName)) {
-                    Toast.makeText(AllGroups.this, "Please Write Group Name", Toast.LENGTH_SHORT).show();
-                } else {
-                    CreateNewGroup(groupName);
-                }
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                dialogInterface.cancel();
-
-            }
-        });
-
-        builder.show();
-    }
-
-    //Here is where we store the group name into the Firebase Database
-    private void CreateNewGroup(final String groupName) {
-        RootRef.child("Groups").child(groupName).setValue("")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                        if(task.isSuccessful()){
-
-                            Toast.makeText(AllGroups.this, groupName + " group is Created Successfully...", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-    }
 
     public void onClickButtonNewGroup(View view) {
-//        RequestNewGroup();
+
         Intent intent = new Intent(AllGroups.this, AddParticipantsToGroup.class);
         startActivity(intent);
 

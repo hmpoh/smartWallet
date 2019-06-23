@@ -12,7 +12,7 @@
         android:layout_height="182dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="129dp"
+        android:layout_marginTop="133dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,5 +51,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.72" />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="247dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/scanner_fragment"
+        android:layout_marginTop="65dp"
+        android:textColor="#000000"
+        android:textSize="20sp" />
 
 </RelativeLayout>

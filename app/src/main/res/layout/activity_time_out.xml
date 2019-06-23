@@ -4,19 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/history"
-    tools:context=".HistoryFragment">
+    tools:context=".TimeOut"
+    android:background="@drawable/timeout">
 
-    <ListView
-        android:id="@+id/listHistory"
-        android:layout_width="349dp"
-        android:layout_height="444dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="1dp"
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="239dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="126dp"
+        android:layout_marginEnd="87dp"
+        android:layout_marginStart="86dp"
+        android:layout_marginTop="436dp"
+        android:background="#00FFFFFF"
+        android:onClick="onClickDone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.353" />
+        app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>

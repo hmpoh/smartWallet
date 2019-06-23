@@ -59,7 +59,7 @@ public class FindPersonToPay extends AppCompatActivity {
 
         Toast.makeText(FindPersonToPay.this, "Started Search",Toast.LENGTH_LONG).show();
 
-        Query firebaseSearchQuery = mUserDatabase.orderByChild("mobileNumber").startAt(Long.parseLong(searchText)).limitToFirst(1);
+        Query firebaseSearchQuery = mUserDatabase.orderByChild("mobileNumber").startAt(Long.parseLong(searchText)).endAt(Long.parseLong(searchText)).limitToFirst(1);
 
         FirebaseRecyclerOptions<User> options = new FirebaseRecyclerOptions.Builder<User>()
                 .setQuery(firebaseSearchQuery, User.class)
@@ -90,6 +90,8 @@ public class FindPersonToPay extends AppCompatActivity {
                 holder.setDetails(model.getMobileNumber(),model.getName());
 
             }
+
+
         };
 
         firebaseRecyclerAdapter.startListening();

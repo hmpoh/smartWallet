@@ -1,6 +1,7 @@
 package sg.edu.tp.smartwallet;
 
 import android.content.Intent;
+import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,41 +10,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-public class AmountToPay extends AppCompatActivity {
-
+public class SetGroupBudget extends AppCompatActivity {
     Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b0,bDot,bDelete;
     TextView amount;
-    Long mMobileNumber;
-    String mName;
-    DatabaseReference reff;
-    private FirebaseAuth mAuth;
-    private String currentUserID;
-
-
+    private DatabaseReference RootRef, GroupNameRootRef;
+    private String currentGroupName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amount_to_pay);
-
-        amount = findViewById(R.id.display);
-
-        mMobileNumber = getIntent().getLongExtra("mobileNumber",0);
-        mName = getIntent().getStringExtra("MNAME");
-
-        TextView mobileNumberTextView = (TextView) findViewById(R.id.mobileNumber);
-        mobileNumberTextView.setText(mMobileNumber.toString());
-
-        TextView nameTextView = (TextView) findViewById(R.id.txtMobileNumber);
-        nameTextView.setText("Pay to " + mName);
+        setContentView(R.layout.activity_set_group_budget);
+        currentGroupName = getIntent().getExtras().get("groupName").toString();
+        RootRef = FirebaseDatabase.getInstance().getReference();
+        GroupNameRootRef = RootRef.child("Groups").child(currentGroupName);
 
 
         b1= (Button)findViewById(R.id.btn1);
@@ -59,7 +44,7 @@ public class AmountToPay extends AppCompatActivity {
         b0= (Button)findViewById(R.id.btn0);
         bDelete= findViewById(R.id.delete);
 
-
+        amount = (TextView)findViewById(R.id.display);
 
 
         b1.setOnClickListener(new View.OnClickListener() {
@@ -150,61 +135,63 @@ public class AmountToPay extends AppCompatActivity {
                 }
             }
         });
-
     }
+    public void onClickYes (View view){
 
-    public void onClickProceed (View view){
         if (amount.getText().toString().length() != 0) {
+            GroupNameRootRef.child("Savings Target").setValue(amount.getText().toString())
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
-        checkBalance();
+                        }
+                    });
+            GroupNameRootRef.child("Amount Raised").setValue("0.00")
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
+                        }
+                    });
+
+            GroupNameRootRef.child("Available Amount").setValue(amount.getText().toString())
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                        }
+                    });
+
+            Intent intent = new Intent(SetGroupBudget.this, ConfirmGroupBudgetEqualSplit.class);
+            intent.putExtra("groupName", currentGroupName);
+            intent.putExtra("AMOUNT",amount.getText().toString() );
+            startActivity(intent);
 
         }
         else
-            Toast.makeText(AmountToPay.this, "ERROR: Amount cannot be empty.", Toast.LENGTH_LONG).show();
-
-    }
-
-    private void checkBalance() {
-        mAuth = FirebaseAuth.getInstance();
-        currentUserID = mAuth.getCurrentUser().getUid();
-
-
-        reff = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID);
-        ValueEventListener balance = reff.addValueEventListener(new ValueEventListener() {
-            public String balance;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                balance = dataSnapshot.child("balance").getValue().toString();
-                Double doubleBalance = Double.parseDouble(balance);
-                Double doubleAmount = Double.parseDouble(amount.getText().toString());
-
-                if (doubleBalance < doubleAmount) {
-                    Toast.makeText(AmountToPay.this, "Insufficient Funds.", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    String amountValue = amount.getText().toString();
-                    String toMobile = mMobileNumber.toString();
-
-                    Intent intent  = new Intent(AmountToPay.this, ConfirmPayment.class);
-
-                    intent.putExtra("AMOUNT",amountValue);
-                    intent.putExtra("TOMOBILE",toMobile);
-                    intent.putExtra("mName",mName);
-
-                    startActivity(intent);
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+            Toast.makeText(SetGroupBudget.this, "ERROR: Amount cannot be empty.", Toast.LENGTH_LONG).show();
     }
 
 
-}
+
+    public void onClickNo (View view){
+        if (amount.getText().toString().length() != 0) {
+
+                           GroupNameRootRef.child("Savings Target").setValue(amount.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                            }
+                        });
+            String amountValue = amount.getText().toString();
+            Intent intent = new Intent(SetGroupBudget.this, ManualSplitting.class);
+            intent.putExtra("AMOUNT",amountValue );
+            startActivity(intent);
+        }
+        else
+            Toast.makeText(SetGroupBudget.this, "ERROR: Amount cannot be empty.", Toast.LENGTH_LONG).show();
+    }
+
+
+    }

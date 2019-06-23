@@ -28,6 +28,6 @@ public class BaseActivity extends AppCompatActivity implements LogoutListener {
     public void onSessionLogout() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
-        startActivity(new Intent(BaseActivity.this, LogIn.class));
+        startActivity(new Intent(BaseActivity.this, TimeOut.class));
     }
 }

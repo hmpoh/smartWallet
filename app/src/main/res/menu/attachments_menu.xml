@@ -3,9 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Generate Amount Qr"
-        android:id="@+id/generate_Amount_QR">
+        android:title="Set Savings Target"
+        android:id="@+id/set_savings_target">
     </item>
+    <item
+        android:id="@+id/pay"
+        android:title="Scan to Pay" />
     <item
         android:id="@+id/receipt"
         android:title="Receipt" />

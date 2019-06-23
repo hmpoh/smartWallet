@@ -32,8 +32,9 @@
         <activity android:name=".History" />
         <activity android:name=".QR" />
         <activity android:name=".Inbox" />
-        <activity android:name=".Group" />
-        <activity android:name=".Chat" />
+        <activity
+            android:name=".Chat"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity android:name=".AllGroups" />
         <activity
             android:name=".FindPersonToPay"
@@ -44,7 +45,40 @@
         <activity
             android:name=".AddParticipantsToGroup"
             android:windowSoftInputMode="stateVisible|adjustPan" />
-        <activity android:name=".Transferring"></activity>
+        <activity android:name=".Transferring" />
+        <activity
+            android:name=".SetGroupBudget"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name=".ConfirmGroupBudgetEqualSplit"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name=".GroupReceipt"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity android:name=".TimeOut" />
+        <activity
+            android:name=".ManualSplitting"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name=".GroupScanToPay"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name=".GroupAmountToPay"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name=".GroupConfirmPayment"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name=".GroupTransferring"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity android:name=".WarningInsufficientFunds" />
+        <activity android:name=".ConfirmToPayGroup">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

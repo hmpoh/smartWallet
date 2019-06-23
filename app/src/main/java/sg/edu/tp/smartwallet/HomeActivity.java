@@ -7,12 +7,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends BaseActivity  {
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

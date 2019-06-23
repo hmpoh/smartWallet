@@ -1,28 +1,24 @@
 package sg.edu.tp.smartwallet;
 
-public class Transfer {
-
+public class Transaction {
     public String fromMobileNumber;
     public String toMobileNumber;
-    public String toGroupAccountNumber;
     public String amount;
     public String notes;
     public String date;
     public String time;
 
-
-    public Transfer() {
-        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    public Transaction() {
     }
 
-    public Transfer(String personMobileNumber, String textViewAmount, String textViewNotes,String currentUserMobileNumber, String currentDate, String currentTime, String toGroupAccountNumber) {
-        this.fromMobileNumber = currentUserMobileNumber ;
+    public Transaction(String personMobileNumber, String amountValue, String notes,String account_number, String currentDate, String currentTime) {
+        this.fromMobileNumber = account_number ;
         this.toMobileNumber = personMobileNumber;
         this.date = currentDate;
         this.time = currentTime;
-        this.amount = textViewAmount;
-        this.notes = textViewNotes;
-        this.toGroupAccountNumber = toGroupAccountNumber;
+        this.amount = amountValue;
+        this.notes = notes;
+
     }
 
     public String getFromMobileNumber() {
@@ -72,14 +68,6 @@ public class Transfer {
     public void setTime(String time) {
         this.time = time;
     }
-
     public String getDateTime(){return date + " " + time;}
 
-    public String getToGroupAccountNumber() {
-        return toGroupAccountNumber;
-    }
-
-    public void setToGroupAccountNumber(String toGroupAccountNumber) {
-        this.toGroupAccountNumber = toGroupAccountNumber;
-    }
 }
