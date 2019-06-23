@@ -173,25 +173,4 @@ public class SetGroupBudget extends AppCompatActivity {
     }
 
 
-
-    public void onClickNo (View view){
-        if (amount.getText().toString().length() != 0) {
-
-                           GroupNameRootRef.child("Savings Target").setValue(amount.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-
-                            }
-                        });
-            String amountValue = amount.getText().toString();
-            Intent intent = new Intent(SetGroupBudget.this, ManualSplitting.class);
-            intent.putExtra("AMOUNT",amountValue );
-            startActivity(intent);
-        }
-        else
-            Toast.makeText(SetGroupBudget.this, "ERROR: Amount cannot be empty.", Toast.LENGTH_LONG).show();
-    }
-
-
     }

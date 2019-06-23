@@ -15,14 +15,13 @@ public class Transfer {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Transfer(String personMobileNumber, String textViewAmount, String textViewNotes,String currentUserMobileNumber, String currentDate, String currentTime, String toGroupAccountNumber) {
+    public Transfer(String personMobileNumber, String textViewAmount, String textViewNotes,String currentUserMobileNumber, String currentDate, String currentTime) {
         this.fromMobileNumber = currentUserMobileNumber ;
         this.toMobileNumber = personMobileNumber;
         this.date = currentDate;
         this.time = currentTime;
         this.amount = textViewAmount;
         this.notes = textViewNotes;
-        this.toGroupAccountNumber = toGroupAccountNumber;
     }
 
     public String getFromMobileNumber() {
@@ -75,11 +74,5 @@ public class Transfer {
 
     public String getDateTime(){return date + " " + time;}
 
-    public String getToGroupAccountNumber() {
-        return toGroupAccountNumber;
-    }
 
-    public void setToGroupAccountNumber(String toGroupAccountNumber) {
-        this.toGroupAccountNumber = toGroupAccountNumber;
-    }
 }

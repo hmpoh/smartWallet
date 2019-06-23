@@ -63,12 +63,6 @@ public class HomeActivity extends BaseActivity  {
                     qRActivity();
 
                 }
-                if (item.getItemId()==R.id.inbox){
-
-                    Intent QR = new Intent(HomeActivity.this, Inbox.class);
-                    startActivity(QR);
-
-                }
                 if (item.getItemId()==R.id.logout){
 
                     logout();

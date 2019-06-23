@@ -95,7 +95,7 @@ public class ConfirmPayment extends AppCompatActivity {
 
             //TO write data into the Firebase
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Transfers");
-            Transfer transfer = new Transfer(textViewMobileNumber.getText().toString(), textViewAmount.getText().toString(), textViewNotes.getText().toString(),currentUserMobileNumber,currentDate,currentTime,toGroupAccountNumber);
+            Transfer transfer = new Transfer(textViewMobileNumber.getText().toString(), textViewAmount.getText().toString(), textViewNotes.getText().toString(),currentUserMobileNumber,currentDate,currentTime);
 //            Toast.makeText(ConfirmPayment.this, "Transfer Details added", Toast.LENGTH_LONG).show();
 
             //TO write to the database one item

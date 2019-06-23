@@ -66,6 +66,9 @@
             android:name=".GroupAmountToPay"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
+            android:name=".TransferringtoGroup"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
             android:name=".GroupConfirmPayment"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
@@ -73,12 +76,16 @@
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity android:name=".WarningInsufficientFunds" />
         <activity android:name=".ConfirmToPayGroup">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
+        <activity android:name=".PayToGroupHistory" />
+        <activity android:name=".TransferingToGroupReceipt"></activity>
     </application>
 
 </manifest>

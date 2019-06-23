@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +25,8 @@ public class ConfirmToPayGroup extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String currentUserID;
     String currentDate,currentTime,currentUserMobileNumber,toGroupAccountNumber;
-    public String mName;
+    public String mName,accountNumber,balance;
+    public Double doubleBalance, doubleAmount;
 
 
     @Override
@@ -36,11 +38,13 @@ public class ConfirmToPayGroup extends AppCompatActivity {
         textViewAmount = findViewById(R.id.amount);
         textViewName = findViewById(R.id.name);
         textViewNotes = findViewById(R.id.notes);
+        textViewMobileNumber = findViewById(R.id.groupAccountId);
 
 
         Intent i = getIntent();
         textViewAmount.setText(getIntent().getStringExtra("AMOUNT"));
         textViewName.setText(getIntent().getStringExtra("groupName"));
+        textViewMobileNumber.setText(getIntent().getStringExtra("TOMOBILE"));
 
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
@@ -51,7 +55,10 @@ public class ConfirmToPayGroup extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String accountNumber = dataSnapshot.child("accountNumber").getValue().toString();
+                accountNumber = dataSnapshot.child("accountNumber").getValue().toString();
+                balance = dataSnapshot.child("balance").getValue().toString();
+                doubleBalance = Double.parseDouble(balance);
+                doubleAmount = Double.parseDouble(getIntent().getStringExtra("AMOUNT"));
                 textViewAccountNumber.setText(accountNumber);
 
                 String name = dataSnapshot.child("name").getValue().toString();
@@ -79,7 +86,12 @@ public class ConfirmToPayGroup extends AppCompatActivity {
     public void onClickGo(View view) {
         String id = reff.push().getKey();
         String mobile = getIntent().getStringExtra("TOMOBILE");
-        if (textViewAmount.getText().toString().length() != 0) {
+
+        if (doubleBalance < doubleAmount) {
+            Toast.makeText(ConfirmToPayGroup.this, "Insufficient Funds.", Toast.LENGTH_LONG).show();
+        }
+
+        else if (textViewAmount.getText().toString().length() != 0) {
 
             Calendar ccalForDate = Calendar.getInstance();
             SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM dd, yyyy");
@@ -94,7 +106,7 @@ public class ConfirmToPayGroup extends AppCompatActivity {
 
             //TO write data into the Firebase
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Transfers");
-            Transfer transfer = new Transfer(textViewMobileNumber.getText().toString(), textViewAmount.getText().toString(), textViewNotes.getText().toString(),currentUserMobileNumber,currentDate,currentTime,toGroupAccountNumber);
+            Transfer transfer = new Transfer(textViewMobileNumber.getText().toString(), textViewAmount.getText().toString(), textViewNotes.getText().toString(),currentUserMobileNumber,currentDate,currentTime);
 //            Toast.makeText(ConfirmPayment.this, "Transfer Details added", Toast.LENGTH_LONG).show();
 
             //TO write to the database one item
@@ -106,10 +118,11 @@ public class ConfirmToPayGroup extends AppCompatActivity {
 //            mDatabase.child(id).child(currentDate);
 //            mDatabase.child(id).child(currentTime);
 
-            Intent intent = new Intent(ConfirmToPayGroup.this, Transferring.class);
+            Intent intent = new Intent(ConfirmToPayGroup.this, TransferringtoGroup.class);
             intent.putExtra("AMOUNT",amountValue);
             intent.putExtra("TOMOBILE",mobile);
             intent.putExtra("groupName",getIntent().getStringExtra("groupName"));
+            intent.putExtra("TOMOBILE",getIntent().getStringExtra("TOMOBILE"));
             startActivity(intent);
 
 

@@ -46,7 +46,7 @@ public class Chat extends AppCompatActivity {
     private DatabaseReference UsersRef, GroupNameRef, GroupMessageKeyRef,ChatsReff;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> list_of_participants = new ArrayList<>();
-    public String amountOwed;
+    public String amountOwed,strtoPay,accountid;
 
     private String currentGroupName, currentUserID, currentUserName, currentDate, currentTime;
     @Override
@@ -72,11 +72,10 @@ public class Chat extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<String>(Chat.this, android.R.layout.simple_list_item_1, list_of_participants);
         listView.setAdapter(arrayAdapter);
 
-        SetUpTopBar();
-
         InitializeFields();
 
         GetUserInfo();
+
 
         SendMessageButton.setOnClickListener(new View.OnClickListener(){
 
@@ -91,6 +90,26 @@ public class Chat extends AppCompatActivity {
             }
         });
 
+        SetUpTopBar();
+        GetAccountNumberInfo();
+
+    }
+
+    private void GetAccountNumberInfo() {
+
+        GroupNameRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                accountid=dataSnapshot.child("Account Id").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void SetUpTopBar() {
@@ -131,8 +150,13 @@ public class Chat extends AppCompatActivity {
                     DataSnapshot ds = (DataSnapshot)iterator.next();
                     String mobileNumber = ds.getKey();
                     amountOwed= ds.child("Amount Owed").getValue().toString();
+                    final Double doubleAmountOwed = Double.parseDouble(amountOwed);
                     String amountPaid = ds.child("Amount Paid").getValue().toString();
-                    set.add(mobileNumber + ": $" + amountPaid + "/ $" + amountOwed);
+                    final Double doubleAmountPaid = Double.parseDouble(amountPaid);
+                    Double toPay = doubleAmountOwed - doubleAmountPaid;
+                    strtoPay = new Double(toPay).toString();
+
+                    set.add(mobileNumber + " to Pay: $"+ strtoPay);
                 }
 
                 list_of_participants.clear();
@@ -306,7 +330,7 @@ public class Chat extends AppCompatActivity {
                 }
                 if (item.getItemId()==R.id.receipt){
 
-                    Intent intent = new Intent(Chat.this, Receipt.class);
+                    Intent intent = new Intent(Chat.this, PayToGroupHistory.class);
                     intent.putExtra("groupName", currentGroupName);
                     startActivity(intent);
 
@@ -332,7 +356,8 @@ public class Chat extends AppCompatActivity {
         Intent intent = new Intent(Chat.this,ConfirmToPayGroup.class);
         intent.putExtra("groupName",getIntent().getStringExtra("groupName"));
         //TODO: Get and send over the group account number?
-        intent.putExtra("AMOUNT",amountOwed);
+        intent.putExtra("TOMOBILE",accountid);
+        intent.putExtra("AMOUNT",strtoPay);
         startActivity(intent);
     }
 }
