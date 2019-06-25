@@ -251,6 +251,7 @@ public class AddParticipantsToGroup extends AppCompatActivity {{}
                         addSelfIntoGroupchat(groupName);
                         CreateGroupAccountId();
                         Intent intent = new Intent(AddParticipantsToGroup.this, AllGroups.class);
+                        intent.putExtra("ParticipantsMobiles",participants);
                         startActivity(intent);
 
 
@@ -271,7 +272,7 @@ public class AddParticipantsToGroup extends AppCompatActivity {{}
     }
 
     private void CreateGroupAccountId() {
-        GroupNameRootRef.child("AccountId").setValue(stringNumber  )
+        GroupNameRootRef.child("Account Id").setValue(stringNumber  )
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

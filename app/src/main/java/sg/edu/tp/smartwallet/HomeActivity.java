@@ -96,6 +96,12 @@ public class HomeActivity extends BaseActivity  {
         startActivity(QR);
     }
 
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        finish();
+
+    }
 
 
 

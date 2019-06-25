@@ -38,6 +38,8 @@ public class HistoryFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private String currentUserID, mobileNumber;
+    ArrayList<TransferWithName> transfers = new ArrayList<>();
+
 
     public static HistoryFragment newInstance(){
         HistoryFragment fragment = new HistoryFragment();
@@ -56,6 +58,9 @@ public class HistoryFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
 
+        final TransferAdapter adapter = new TransferAdapter(getActivity(),transfers);
+        historyList.setAdapter(adapter);
+
         userReff = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID);
         userReff.addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,8 +72,10 @@ public class HistoryFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
-                            ArrayList<TransferWithName> transfers = new ArrayList<>();
+                            transfers.clear();
+
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
                                 Transfer transfer = ds.getValue(Transfer.class);
 
                                 if (transfer.fromMobileNumber.equals(mobileNumber))
@@ -83,8 +90,7 @@ public class HistoryFragment extends Fragment {
 
                                 }
                             }
-                            TransferAdapter adapter = new TransferAdapter(getActivity(),transfers);
-                            historyList.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
                         }
                     }
 

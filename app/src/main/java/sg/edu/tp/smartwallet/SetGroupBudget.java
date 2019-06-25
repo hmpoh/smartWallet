@@ -12,13 +12,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SetGroupBudget extends AppCompatActivity {
     Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b0,bDot,bDelete;
     TextView amount;
-    private DatabaseReference RootRef, GroupNameRootRef;
+    private DatabaseReference RootRef, GroupNameRootRef,particpantReff;
     private String currentGroupName;
 
 
@@ -139,28 +142,41 @@ public class SetGroupBudget extends AppCompatActivity {
     public void onClickYes (View view){
 
         if (amount.getText().toString().length() != 0) {
-            GroupNameRootRef.child("Savings Target").setValue(amount.getText().toString())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+            GroupNameRootRef.child("Savings Target").setValue(amount.getText().toString());
+            GroupNameRootRef.child("Amount Raised").setValue("0.00");
+            GroupNameRootRef.child("Available Amount").setValue(amount.getText().toString());
 
-                        }
-                    });
-            GroupNameRootRef.child("Amount Raised").setValue("0.00")
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                        }
-                    });
-
-            GroupNameRootRef.child("Available Amount").setValue(amount.getText().toString())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                        }
-                    });
+//            DatabaseReference particpantReff = GroupNameRootRef.child("Participants");
+//            ValueEventListener eventListener = new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+//                        ds.child("Amount Paid").getRef().setValue("0.00");
+//                        ds.child("Amount Owed").getRef().setValue("3.00");
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {}
+//            };
+//            particpantReff.addListenerForSingleValueEvent(eventListener);
+//            GroupNameRootRef.child("Participants").child(getIntent().getStringExtra("ParticipantsMobiles")).child("Amount Owed").setValue(amount.getText().toString())
+//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//
+//                        }
+//                    });
+//
+//            GroupNameRootRef.child("Participants").child(getIntent().getStringExtra("ParticipantsMobiles")).child("Amount Paid").setValue("0.00")
+//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//
+//                        }
+//                    });
 
             Intent intent = new Intent(SetGroupBudget.this, ConfirmGroupBudgetEqualSplit.class);
             intent.putExtra("groupName", currentGroupName);

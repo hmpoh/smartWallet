@@ -113,7 +113,7 @@ public class Chat extends AppCompatActivity {
     }
 
     private void SetUpTopBar() {
-        GroupNameRef.addValueEventListener(new ValueEventListener() {
+        GroupNameRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild("Savings Target")){
@@ -318,6 +318,7 @@ public class Chat extends AppCompatActivity {
 
                     Intent intent = new Intent(Chat.this, SetGroupBudget.class);
                     intent.putExtra("groupName", currentGroupName);
+                    intent.putExtra("ParticipantsMobiles",getIntent().getStringExtra("ParticipantsMobiles"));
                     startActivity(intent);
 
                 }

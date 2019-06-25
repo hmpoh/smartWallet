@@ -56,5 +56,13 @@ public class AllGroups extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(AllGroups.this, HomeActivity.class));
+        finish();
+
+    }
 }
 

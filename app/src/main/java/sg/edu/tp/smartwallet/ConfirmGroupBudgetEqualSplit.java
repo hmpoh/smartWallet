@@ -93,23 +93,23 @@ public class ConfirmGroupBudgetEqualSplit extends AppCompatActivity {
 
 
     }
-
+//TODO
     public void onClickProceed(View view){
         RootRef.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Retrieve Group line by line
-                Set<String> set = new HashSet<>();
-                Iterator iterator = dataSnapshot.getChildren().iterator();
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Retrieve Group line by line
+                    Set<String> set = new HashSet<>();
+                    Iterator iterator = dataSnapshot.getChildren().iterator();
 
-                while (iterator.hasNext())
-                {
-                    DatabaseReference ds = ((DataSnapshot)iterator.next()).getRef();
-                    ds.child("Amount Owed").setValue(stringNewAmount);
-                    ds.child("Amount Paid").setValue("0.00");
+                    while (iterator.hasNext())
+                    {
+                        DatabaseReference ds = ((DataSnapshot)iterator.next()).getRef();
+                        ds.child("Amount Owed").setValue(stringNewAmount);
+                        ds.child("Amount Paid").setValue("0.00");
+                    }
                 }
-            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {

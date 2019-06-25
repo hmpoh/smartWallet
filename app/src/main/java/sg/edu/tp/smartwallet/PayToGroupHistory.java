@@ -63,55 +63,9 @@ public class PayToGroupHistory extends AppCompatActivity {
                                     deposit_list.setAdapter(adapter);
 
                                 }
-                                else{
-                                        groupTransferReff.addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                                groupTransferReff.addValueEventListener(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                        if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
-                                                            ArrayList<TransferWithName> transfers = new ArrayList<>();
-                                                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                                                Transaction transaction = ds.getValue(Transaction.class);
-
-//                                if (transfer.fromMobileNumber.equals(accountId))
-//                                {
-//                                    transfers.add(new TransferWithName("PAID: $" + transfer.getAmount(), transfer.getDateTime(),"To "+transfer.getToMobileNumber()));
-//                                    TransferAdapter adapter = new TransferAdapter(PayToGroupHistory.this,transfers);
-//                                    withdraw_list.setAdapter(adapter);
-//                                    //TODO
-//                                    //End
-//                                }
-                                                                if (transaction.toMobileNumber.equals(accountId)){
-
-                                                                    transfers.add(new TransferWithName("PAID: $"+ transaction.getAmount(), transaction.getDateTime(),"From "+transaction.getFromMobileNumber()));
-                                                                    TransferAdapter adapter = new TransferAdapter(PayToGroupHistory.this,transfers);
-                                                                    withdraw_list.setAdapter(adapter);
-
-                                                                }
-                                                            }
-
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                    }
-                                                });
-
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-
-                                    }
+//                                else{
+//
+//                                    }
                             }
 
                         }
@@ -131,6 +85,43 @@ public class PayToGroupHistory extends AppCompatActivity {
 
             }
         });
+        groupTransferReff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                groupTransferReff.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
+                            ArrayList<TransferWithName> transfers = new ArrayList<>();
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                Transaction transaction = ds.getValue(Transaction.class);
+
+                                transfers.add(new TransferWithName("PAID: $"+ transaction.getAmount(), transaction.getDateTime(),"From "+transaction.getFromMobileNumber()));
+                                TransferAdapter adapter = new TransferAdapter(PayToGroupHistory.this,transfers);
+                                withdraw_list.setAdapter(adapter);
+
+                            }
+                        }
+
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
     }

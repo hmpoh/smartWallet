@@ -31,31 +31,31 @@ public class Receipt extends AppCompatActivity {
         textAmount = findViewById(R.id.amountPaid);
 
         mAuth = FirebaseAuth.getInstance();
-        currentUserID = mAuth.getCurrentUser().getUid();
-        Intent intent = getIntent();
-        String key = intent.getStringExtra("SKEY");
-        final String amount = intent.getStringExtra("Amount");
+    currentUserID = mAuth.getCurrentUser().getUid();
+    Intent intent = getIntent();
+    String key = intent.getStringExtra("SKEY");
+    final String amount = intent.getStringExtra("Amount");
         textAmount.setText("$" + amount);
 
 
-        reff = FirebaseDatabase.getInstance().getReference("Users").child(key);
+    reff = FirebaseDatabase.getInstance().getReference("Users").child(key);
 
         reff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String name=dataSnapshot.child("name").getValue().toString();
-                textName.setText(name);
+            String name=dataSnapshot.child("name").getValue().toString();
+            textName.setText(name);
 
-            }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+        }
+    });
 
-    }
+}
 
 
     public void onClickDone (View view){

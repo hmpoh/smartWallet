@@ -64,6 +64,7 @@ public class GroupsFragment extends Fragment {
 
                 Intent groupChatIntent = new Intent(getContext(), Chat.class);
                 groupChatIntent.putExtra("groupName", currentGroupName);
+                groupChatIntent.putExtra("ParticipantsMobiles",getActivity().getIntent().getStringExtra("ParticipantsMobiles"));
                 startActivity(groupChatIntent);
             }
         });

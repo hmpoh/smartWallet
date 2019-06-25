@@ -25,7 +25,7 @@ public class ConfirmToPayGroup extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String currentUserID;
     String currentDate,currentTime,currentUserMobileNumber,toGroupAccountNumber;
-    public String mName,accountNumber,balance;
+    public String mName,accountNumber,balance, id;
     public Double doubleBalance, doubleAmount;
 
 
@@ -84,7 +84,7 @@ public class ConfirmToPayGroup extends AppCompatActivity {
 
 
     public void onClickGo(View view) {
-        String id = reff.push().getKey();
+        id = reff.push().getKey();
         String mobile = getIntent().getStringExtra("TOMOBILE");
 
         if (doubleBalance < doubleAmount) {
@@ -119,10 +119,11 @@ public class ConfirmToPayGroup extends AppCompatActivity {
 //            mDatabase.child(id).child(currentTime);
 
             Intent intent = new Intent(ConfirmToPayGroup.this, TransferringtoGroup.class);
-            intent.putExtra("AMOUNT",amountValue);
+            intent.putExtra("AMOUNT",getIntent().getStringExtra("AMOUNT"));
             intent.putExtra("TOMOBILE",mobile);
             intent.putExtra("groupName",getIntent().getStringExtra("groupName"));
             intent.putExtra("TOMOBILE",getIntent().getStringExtra("TOMOBILE"));
+            intent.putExtra("SKEY",id);
             startActivity(intent);
 
 
